@@ -1,6 +1,6 @@
 project:
   type: website
-  output-dir: docs  # Important for GitHub Pages
+  output-dir: docs
 
 website:
   title: "Statistical Computing Assignment"
@@ -21,7 +21,7 @@ website:
 
 format:
   html:
-    theme: cosmo      
+    theme: minty      
     code-fold: show
     code-summary: "Hide code"
     toc: true           

@@ -2,7 +2,7 @@
 title: "Statistical Computing - Assignment 1"
 ---
 
-# Welcome
+## Welcome
 
 This website contains an interactive website for Assignment 1 of Statistical Computing. Use the sidebar on the left to navigate through the different parts of the assignment.
 

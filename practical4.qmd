@@ -2,23 +2,24 @@
 title: "Practical 4 - Tidyverse"
 ---
 
-::: {.callout-warning}
-## Note on Truncation
-Most tables have been truncated using the head() function in the interest of readability.
+::: {.callout-tip}
+## Note on Tables
+Most tables have been limited to 300px in height and are scrollable, in the interest of a more readable website.
 :::
 
-# Question 1
+## Question 1
 ```{r}
 #| echo: true
 #| message: false
 library(tidyverse)
 library(nycflights13)
 library(knitr)
+library(kableExtra)
 
 glimpse(flights)
 ```
 
-# Question 2
+## Question 2
 ```{r}
 #| echo: true
 #| message: false
@@ -30,14 +31,16 @@ dist_tbl <-
     mean_dist = mean(distance, na.rm = TRUE),
     sd_dist   = sd(distance, na.rm = TRUE)
   ) %>%
-  arrange(mean_dist)
+  arrange(desc(mean_dist))
 
-kable(dist_tbl)
+dist_tbl %>%
+  kable() %>%
+  scroll_box(width = "100%", height = "300px")
 ```
 
-# Question 3
-## Question 3.1
-We can see here that there is only one observation on carrier "OO" in month 1, thus when calculating our standard deviation in the previous table we receive an NA.
+## Question 3
+### Question 3.1
+The 'OO' carrier contains only a single observation for Month 1; consequently, the standard deviation is undefined (NA), as a minimum of two data points is required to calculate variance.
 ```{r}
 #| echo: true
 #| message: false
@@ -49,19 +52,22 @@ check1 <-
 kable(check1)
 ```
 
-## Question 3.2
-Here we see that in month 1, carriers F9, YV, AS and HA flew identical distances every time, thus leading to us having a standard deviation of 0 
+### Question 3.2
+For carriers F9, YV, AS, and HA, the flight distances in Month 1 were uniform. Because there is no variance between these observations, the resulting standard deviation is zero.
 ```{r}
 check2 <- 
   flights %>%
-  filter(carrier == "F9") %>%
+  filter(carrier %in% c("F9", "YV", "AS", "HA")) %>%
   filter(month == 1) %>%
-  select(distance, month, carrier)
+  select(distance, month, carrier) %>% 
+  arrange(desc(distance))
 
-kable(head(check2))
+check2 %>% 
+  kable() %>%
+  scroll_box(width = "100%", height = "300px")
 ```
 
-# Question 4
+## Question 4
 ```{r}
 #| echo: true
 #| message: false
@@ -80,7 +86,7 @@ dep_tbl <-
 kable(dep_tbl)
 ```
 
-# Question 5
+## Question 5
 ```{r}
 #| echo: true
 #| message: false
@@ -94,8 +100,8 @@ fast_flights <-
 
 kable(fast_flights)
 ```
-# Question 6
-## Question 6.1
+## Question 6
+### Question 6.1
 ```{r}
 #| echo: true
 #| message: false
@@ -108,10 +114,12 @@ mult_routes <- flights %>%
   filter(num_carriers > 1) %>%        
   arrange(desc(num_carriers))
 
-kable(head(mult_routes))
+mult_routes %>%
+  kable() %>%
+  scroll_box(width = "100%", height = "300px")
 ```
 
-## Question 6.2
+### Question 6.2
 ```{r}
 #| echo: true
 #| message: false
@@ -126,10 +134,12 @@ details <-
   ) %>% 
   arrange(desc(ave_delay))
 
-kable(head(details))
+details %>%
+  kable() %>%
+  scroll_box(width = "100%", height = "300px")
 ```
 
-## Question 6.3
+### Question 6.3
 ```{r}
 #| echo: true
 #| message: false
@@ -144,10 +154,12 @@ details_routes <- details %>%
     .by = route
   )
 
-kable(head(details_routes))
+details_routes %>% 
+  kable() %>%
+  scroll_box(width = "100%", height = "300px")
 ```
 
-## Question 6.4
+### Question 6.4
 ```{r}
 #| echo: true
 #| message: false
@@ -159,11 +171,13 @@ worst_diff <-
   ) %>% 
   arrange(desc(delta))
 
-kable(head(worst_diff))
+worst_diff %>% 
+  kable() %>%
+  scroll_box(width = "100%", height = "300px")
 ```
 
-## Question 6.5
-It seems that ExpressJet had only one terribly delayed flight (as seen in table 2) from JFK to ATL and thus skews the average to that singular data point, thus leading to it becoming the worst difference
+### Question 6.5
+The high average delay for ExpressJet is driven by a single outlier event on the JFK to ATL route. Because the dataset for this specific path consists of only one observation, the average is entirely dictated by that solitary delay, thus leading to it becoming the worst difference
 ```{r}
 #| echo: true
 #| message: false
@@ -184,10 +198,10 @@ reason2 <-
 kable(reason2)
 ```
 
-# Question 7
-Gender has a typo "femal" \n
-Disease status has a duplicate "healthy" and "Healthy" \n
-Glucose and height have NA entries \n
+## Question 7
+* **Typographical Errors:** The `Gender` variable contains a misspelling ("femal").
+* **Redundant Factor Levels:** `Disease status` contains duplicates ("healthy"/"Healthy").
+* **Missing Data:** `Glucose` and `Height` contain `NA` entries.
 
 ```{r}
 #| echo: true

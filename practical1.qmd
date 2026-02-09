@@ -3,7 +3,7 @@ title: "Practical 1 -- Introduction to R"
 ---
 
 
-# Question 1
+## Question 1
 
 ```{r}
 #| echo: true
@@ -13,7 +13,7 @@ na_rows <- which(rowSums(is.na(data)) > 0)
 na_rows
 ```
 
-# Question 2
+## Question 2
 
 ```{R}
 #| echo: true
@@ -36,7 +36,7 @@ kable(summary_table,
     
 ```
 
-# Question 3
+## Question 3
 
 ```{r}
 #| echo: true
@@ -45,16 +45,27 @@ cars_data <- cars
 Y <- cars_data$dist
 X <- cbind(1, cars$speed)
 
-beta_hat <- solve(t(X)%*%X)%*%(t(X)%*%Y)
-beta_hat
+
+beta_mat <- solve(t(X) %*% X) %*% (t(X) %*% Y)
+beta_hat <- data.frame(
+  Term = c("Intercept", "Speed"), 
+  Estimate = as.matrix(beta_mat)
+)
+
+kable(beta_hat, digits = 4, 
+      caption = "Manual Model Coefficients",
+      col.names = c("Term","Coefficients"))
+
 ```
 
-# Question 4
+## Question 4
 ```{r}
 #| echo: true
 #| message: false
 model <- lm(cars_data$dist~cars_data$speed)
-model$coefficients
+kable(model$coefficients, digits = 4, 
+      caption = "LM Model Coefficients",
+      col.names = c("Coefficients"))
 ```
 
       

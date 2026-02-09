@@ -2,16 +2,16 @@
 title: "Practical 2 - Questions 4 & 5"
 ---
 
-# Question 4
+## Question 4
 ```{r}
 #| echo: true
 #| message: false
 x <- seq(-2, 2, length.out = 1000)
 y <- sin(x)
-plot(y~x)
+plot(y~x, type = "l", main = "Graph of sin(x)")
 ```
 
-# Question 5
+## Question 5
 ```{r}
 #| echo: true
 #| message: false
@@ -32,11 +32,12 @@ lower <- apply(envelope, 1, quantile, probs = 0.025)
 upper <- apply(envelope, 1, quantile, probs = 0.975)
 
 par(mfrow=c(2, 1))
-plot(sim~sim_norm, ylim = c(-10,10))
-abline(0,1)
-lines(sim_norm, lower)
-lines(sim_norm, upper)
+plot(sim~sim_norm, ylim = c(-10,10), main = "Simulated QQ Plot")
 
-qqPlot(sim, envelope = 0.95, ylim = c(-5, 5))
+abline(0,1, lwd = 1, col = "blue")
+lines(sim_norm, lower, lwd = 2, col = "blue")
+lines(sim_norm, upper, lwd = 2, col = "blue")
+
+invisible(qqPlot(sim, envelope = 0.95, ylim = c(-5, 5), main = "Library Generated QQ Plot"))
 ```
 

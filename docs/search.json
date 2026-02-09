@@ -1,0 +1,100 @@
+[
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Statistical Computing - Assignment 1",
+    "section": "",
+    "text": "Welcome\nThis website contains an interactive website for Assignment 1 of Statistical Computing. Use the sidebar on the left to navigate through the different parts of the assignment.\n\nStudent Details\n\nName: Liam Kilian\nStudent ID: KLNLIA004\nDate: 08 February 2026\n\n\n\n\n\n\n\nTipHow to use this site\n\n\n\nYou can click the “Hide code” buttons within each practical to hide the underlying R syntax used for the analysis.",
+    "crumbs": [
+      "Home"
+    ]
+  },
+  {
+    "objectID": "practical1.html",
+    "href": "practical1.html",
+    "title": "Practical 1 – Introduction to R",
+    "section": "",
+    "text": "Question 1\n\n\nHide code\ndata &lt;- airquality\nna_rows &lt;- which(rowSums(is.na(data)) &gt; 0)\nna_rows\n\n\n [1]   5   6  10  11  25  26  27  32  33  34  35  36  37  39  42  43  45  46  52\n[20]  53  54  55  56  57  58  59  60  61  65  72  75  83  84  96  97  98 102 103\n[39] 107 115 119 150\n\n\n\n\nQuestion 2\n\n\nHide code\nlibrary(knitr)\n\nsummary_table &lt;- data.frame(\n  Variable = c(\"Ozone\", \"Temperature\"),\n  Mean = c(mean(data$Ozone, na.rm = TRUE), mean(data$Temp, na.rm = TRUE)),\n  SD = c(sd(data$Ozone, na.rm = TRUE), sd(data$Temp, na.rm = TRUE)),\n  Min = c(min(data$Ozone, na.rm = TRUE), min(data$Temp, na.rm = TRUE)),\n  Max = c(max(data$Ozone, na.rm = TRUE), max(data$Temp, na.rm = TRUE))\n)\n\nkable(summary_table, \n      digits = 2, \n      caption = \"Descriptive Statistics for Ozone and Temperature\",\n      col.names = c(\"Variable\", \"Mean\", \"Std. Deviation\", \"Minimum\", \"Maximum\"))\n\n\n\nDescriptive Statistics for Ozone and Temperature\n\n\nVariable\nMean\nStd. Deviation\nMinimum\nMaximum\n\n\n\n\nOzone\n42.13\n32.99\n1\n168\n\n\nTemperature\n77.88\n9.47\n56\n97\n\n\n\n\n\n\n\nQuestion 3\n\n\nHide code\ncars_data &lt;- cars\nY &lt;- cars_data$dist\nX &lt;- cbind(1, cars$speed)\n\nbeta_hat &lt;- solve(t(X)%*%X)%*%(t(X)%*%Y)\nbeta_hat\n\n\n           [,1]\n[1,] -17.579095\n[2,]   3.932409\n\n\n\n\nQuestion 4\n\n\nHide code\nmodel &lt;- lm(cars_data$dist~cars_data$speed)\nmodel$coefficients\n\n\n    (Intercept) cars_data$speed \n     -17.579095        3.932409",
+    "crumbs": [
+      "Assignment Parts",
+      "Practical 1"
+    ]
+  },
+  {
+    "objectID": "practical2.html",
+    "href": "practical2.html",
+    "title": "Practical 2 - Questions 4 & 5",
+    "section": "",
+    "text": "Question 4\n\n\nHide code\nx &lt;- seq(-2, 2, length.out = 1000)\ny &lt;- sin(x)\nplot(y~x)\n\n\n\n\n\n\n\n\n\n\n\nQuestion 5\n\n\nHide code\nlibrary(car)\n\nn &lt;- 1000\nrep &lt;- 1000\nsim &lt;- sort(rt(n, 1))\n\nsim_norm &lt;- sort(rnorm(n))\nenvelope &lt;- replicate(rep, sort(rnorm(n)))\nlower &lt;- apply(envelope, 1, quantile, probs = 0.025)\nupper &lt;- apply(envelope, 1, quantile, probs = 0.975)\n\npar(mfrow=c(2, 1))\nplot(sim~sim_norm, ylim = c(-10,10))\nabline(0,1)\nlines(sim_norm, lower)\nlines(sim_norm, upper)\n\nqqPlot(sim, envelope = 0.95, ylim = c(-5, 5))\n\n\n\n\n\n\n\n\n\n[1]    1 1000",
+    "crumbs": [
+      "Assignment Parts",
+      "Practical 2"
+    ]
+  },
+  {
+    "objectID": "practical4.html",
+    "href": "practical4.html",
+    "title": "Practical 4 - Tidyverse",
+    "section": "",
+    "text": "WarningNote on Truncation\n\n\n\nMost tables have been truncated using the head() function in the interest of readability.",
+    "crumbs": [
+      "Assignment Parts",
+      "Practical 4"
+    ]
+  },
+  {
+    "objectID": "practical4.html#question-6.1",
+    "href": "practical4.html#question-6.1",
+    "title": "Practical 4 - Tidyverse",
+    "section": "Question 6.1",
+    "text": "Question 6.1\n\n\nHide code\nmult_routes &lt;- flights %&gt;% \n  mutate(route = paste(origin, dest, sep = \"-\")) %&gt;% \n  group_by(route) %&gt;% \n  summarise(\n    num_carriers = n_distinct(carrier)\n  ) %&gt;% \n  filter(num_carriers &gt; 1) %&gt;%        \n  arrange(desc(num_carriers))\n\nkable(head(mult_routes))\n\n\n\n\n\nroute\nnum_carriers\n\n\n\n\nEWR-DTW\n5\n\n\nEWR-MSP\n5\n\n\nJFK-LAX\n5\n\n\nJFK-SFO\n5\n\n\nJFK-TPA\n5\n\n\nLGA-ATL\n5",
+    "crumbs": [
+      "Assignment Parts",
+      "Practical 4"
+    ]
+  },
+  {
+    "objectID": "practical4.html#question-6.2",
+    "href": "practical4.html#question-6.2",
+    "title": "Practical 4 - Tidyverse",
+    "section": "Question 6.2",
+    "text": "Question 6.2\n\n\nHide code\ndetails &lt;- \n  flights %&gt;% \n  mutate(route = paste(origin, dest, sep = \"-\")) %&gt;% \n  filter(route %in% mult_routes$route) %&gt;% \n  left_join(airlines, by = \"carrier\") %&gt;%\n  summarise(\n    ave_delay = mean(arr_delay, na.rm = T),\n    .by = c(carrier, route, name)\n  ) %&gt;% \n  arrange(desc(ave_delay))\n\nkable(head(details))\n\n\n\n\n\ncarrier\nroute\nname\nave_delay\n\n\n\n\nEV\nJFK-ATL\nExpressJet Airlines Inc.\n128.0\n\n\nEV\nLGA-XNA\nExpressJet Airlines Inc.\n119.0\n\n\nUA\nEWR-STL\nUnited Air Lines Inc.\n110.0\n\n\nOO\nLGA-ORD\nSkyWest Airlines Inc.\n107.0\n\n\n9E\nLGA-MSP\nEndeavor Air Inc.\n100.0\n\n\nEV\nLGA-MSY\nExpressJet Airlines Inc.\n72.5",
+    "crumbs": [
+      "Assignment Parts",
+      "Practical 4"
+    ]
+  },
+  {
+    "objectID": "practical4.html#question-6.3",
+    "href": "practical4.html#question-6.3",
+    "title": "Practical 4 - Tidyverse",
+    "section": "Question 6.3",
+    "text": "Question 6.3\n\n\nHide code\ndetails_routes &lt;- details %&gt;% \n  summarise(\n    min_delay = min(ave_delay),\n    carrier_min = carrier[which.min(ave_delay)],\n    \n    max_delay = max(ave_delay),\n    carrier_max = carrier[which.max(ave_delay)],\n    \n    .by = route\n  )\n\nkable(head(details_routes))\n\n\n\n\n\nroute\nmin_delay\ncarrier_min\nmax_delay\ncarrier_max\n\n\n\n\nJFK-ATL\n1.403846\n9E\n128.0\nEV\n\n\nLGA-XNA\n6.956215\nMQ\n119.0\nEV\n\n\nEWR-STL\n13.629032\nWN\n110.0\nUA\n\n\nLGA-ORD\n-1.313968\nAA\n107.0\nOO\n\n\nLGA-MSP\n4.326915\nDL\n100.0\n9E\n\n\nLGA-MSY\n-29.000000\n9E\n72.5\nEV",
+    "crumbs": [
+      "Assignment Parts",
+      "Practical 4"
+    ]
+  },
+  {
+    "objectID": "practical4.html#question-6.4",
+    "href": "practical4.html#question-6.4",
+    "title": "Practical 4 - Tidyverse",
+    "section": "Question 6.4",
+    "text": "Question 6.4\n\n\nHide code\nworst_diff &lt;-\n  details_routes %&gt;% \n  summarise(\n    delta = max_delay - min_delay,\n    .by = route\n  ) %&gt;% \n  arrange(desc(delta))\n\nkable(head(worst_diff))\n\n\n\n\n\nroute\ndelta\n\n\n\n\nJFK-ATL\n126.59615\n\n\nLGA-XNA\n112.04379\n\n\nLGA-ORD\n108.31397\n\n\nLGA-MSY\n101.50000\n\n\nEWR-STL\n96.37097\n\n\nLGA-MSP\n95.67309",
+    "crumbs": [
+      "Assignment Parts",
+      "Practical 4"
+    ]
+  },
+  {
+    "objectID": "practical4.html#question-6.5",
+    "href": "practical4.html#question-6.5",
+    "title": "Practical 4 - Tidyverse",
+    "section": "Question 6.5",
+    "text": "Question 6.5\nIt seems that Expressjet had only one terribly delayed flight (as seen in table 2) from JFK to ATL and thus skews the average to that singular data point, thus leading to it becoming the worst difference\n\n\nHide code\nreason &lt;- \n  flights %&gt;% \n  mutate(route = paste(origin, dest, sep = \"-\")) %&gt;%\n  filter(route == \"JFK-ATL\") %&gt;% \n  summarise(\n    ave_delay = mean(arr_delay, na.rm = T),\n    .by = carrier\n  )  \nkable(reason)\n\n\n\n\n\ncarrier\nave_delay\n\n\n\n\nDL\n6.344403\n\n\n9E\n1.403846\n\n\nEV\n128.000000\n\n\n\n\n\nHide code\nreason2 &lt;- \n  flights %&gt;% \n  mutate(route = paste(origin, dest, sep = \"-\")) %&gt;%\n  filter(route == \"JFK-ATL\", carrier == \"EV\")\nkable(reason2)\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nyear\nmonth\nday\ndep_time\nsched_dep_time\ndep_delay\narr_time\nsched_arr_time\narr_delay\ncarrier\nflight\ntailnum\norigin\ndest\nair_time\ndistance\nhour\nminute\ntime_hour\nroute\n\n\n\n\n2013\n10\n7\n904\n700\n124\n1133\n925\n128\nEV\n5621\nN748EV\nJFK\nATL\n118\n760\n7\n0\n2013-10-07 07:00:00\nJFK-ATL",
+    "crumbs": [
+      "Assignment Parts",
+      "Practical 4"
+    ]
+  }
+]

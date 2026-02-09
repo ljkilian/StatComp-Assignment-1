@@ -1,0 +1,17 @@
+---
+title: "Statistical Computing - Assignment 1"
+---
+
+# Welcome
+
+This website contains an interactive website for Assignment 1 of Statistical Computing. Use the sidebar on the left to navigate through the different parts of the assignment.
+
+### Student Details
+* **Name:** Liam Kilian
+* **Student ID:** KLNLIA004
+* **Date:** 08 February 2026
+
+::: {.callout-tip}
+## How to use this site
+You can click the "Hide code" buttons within each practical to hide the underlying R syntax used for the analysis.
+:::

@@ -1,0 +1,60 @@
+---
+title: "Practical 1 -- Introduction to R"
+---
+
+
+# Question 1
+
+```{r}
+#| echo: true
+
+data <- airquality
+na_rows <- which(rowSums(is.na(data)) > 0)
+na_rows
+```
+
+# Question 2
+
+```{R}
+#| echo: true
+#| message: false
+
+library(knitr)
+
+summary_table <- data.frame(
+  Variable = c("Ozone", "Temperature"),
+  Mean = c(mean(data$Ozone, na.rm = TRUE), mean(data$Temp, na.rm = TRUE)),
+  SD = c(sd(data$Ozone, na.rm = TRUE), sd(data$Temp, na.rm = TRUE)),
+  Min = c(min(data$Ozone, na.rm = TRUE), min(data$Temp, na.rm = TRUE)),
+  Max = c(max(data$Ozone, na.rm = TRUE), max(data$Temp, na.rm = TRUE))
+)
+
+kable(summary_table, 
+      digits = 2, 
+      caption = "Descriptive Statistics for Ozone and Temperature",
+      col.names = c("Variable", "Mean", "Std. Deviation", "Minimum", "Maximum"))
+    
+```
+
+# Question 3
+
+```{r}
+#| echo: true
+#| message: false
+cars_data <- cars
+Y <- cars_data$dist
+X <- cbind(1, cars$speed)
+
+beta_hat <- solve(t(X)%*%X)%*%(t(X)%*%Y)
+beta_hat
+```
+
+# Question 4
+```{r}
+#| echo: true
+#| message: false
+model <- lm(cars_data$dist~cars_data$speed)
+model$coefficients
+```
+
+      

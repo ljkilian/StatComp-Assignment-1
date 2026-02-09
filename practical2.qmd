@@ -1,0 +1,42 @@
+---
+title: "Practical 2 - Questions 4 & 5"
+---
+
+# Question 4
+```{r}
+#| echo: true
+#| message: false
+x <- seq(-2, 2, length.out = 1000)
+y <- sin(x)
+plot(y~x)
+```
+
+# Question 5
+```{r}
+#| echo: true
+#| message: false
+#| warning: false
+#| fig-width: 8
+#| fig-height: 16
+#| out-width: "80%"
+
+library(car)
+
+n <- 1000
+rep <- 1000
+sim <- sort(rt(n, 1))
+
+sim_norm <- sort(rnorm(n))
+envelope <- replicate(rep, sort(rnorm(n)))
+lower <- apply(envelope, 1, quantile, probs = 0.025)
+upper <- apply(envelope, 1, quantile, probs = 0.975)
+
+par(mfrow=c(2, 1))
+plot(sim~sim_norm, ylim = c(-10,10))
+abline(0,1)
+lines(sim_norm, lower)
+lines(sim_norm, upper)
+
+qqPlot(sim, envelope = 0.95, ylim = c(-5, 5))
+```
+

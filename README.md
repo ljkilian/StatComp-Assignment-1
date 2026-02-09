@@ -1,2 +1,2 @@
-# StatComp-Assignment-1
-
+# StatComp Assignments
+A collection of my submitted assignments for Honours Statistical Computing

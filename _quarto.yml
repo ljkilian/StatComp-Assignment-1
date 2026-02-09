@@ -1,0 +1,30 @@
+project:
+  type: website
+  output-dir: docs  # Important for GitHub Pages
+
+website:
+  title: "Statistical Computing Assignment"
+  sidebar:
+    style: "docked"
+    search: true
+    contents:
+      - text: "Home"
+        file: index.qmd
+      - section: "Assignment Parts"
+        contents:
+          - text: "Practical 1"
+            file: practical1.qmd
+          - text: "Practical 2"
+            file: practical2.qmd
+          - text: "Practical 4"
+            file: practical4.qmd
+
+format:
+  html:
+    theme: cosmo      
+    code-fold: show
+    code-summary: "Hide code"
+    toc: true           
+    toc-location: right
+    number-sections: false
+    page-layout: article
